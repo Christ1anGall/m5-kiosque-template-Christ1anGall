@@ -4,7 +4,7 @@ from menu import products
 def get_product_by_id(id: int):
 
     if type(id) != int:
-        raise TypeError('id must be an integer')
+        raise TypeError('product id must be an int')
                
     for elem in products:
 
@@ -15,7 +15,7 @@ def get_product_by_id(id: int):
 
 def get_products_by_type(type):
 
-    if type(type) != str:
+    if not isinstance(type, str):
         raise TypeError('product type must be a str')
 
     list = []
@@ -45,7 +45,7 @@ def menu_report() -> str:
             common_name = elem_out['type']
             common_number = count
 
-    return f"Products Count: {len(products)} - Average Price: ${price / len(products):.2f} - Most Common Type: {common_name}"
+    return f"Products Count: {len(products)} - Average Price: ${round(price / len(products),2)} - Most Common Type: {common_name}"
 
 
 def add_product(menu, **new_product):
@@ -53,6 +53,6 @@ def add_product(menu, **new_product):
     for id in menu:
         if (id["_id"] > last_id):
             last_id = id["_id"]
-    menu = [*menu, {**new_product, "_id": last_id + 1}]
+    menu.append({**new_product, "_id": last_id + 1})
 
     return {**new_product, "_id": last_id + 1}
